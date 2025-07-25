@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🌤️ Weather Chatbot</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌤️ Weather Chatbot</h1>
+    <div id="chat-box"></div>
+    <form id="chat-form">
+      <input type="text" id="msg" placeholder="Type your message..." autocomplete="off" required />
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("chat-form");
+    const chatBox = document.getElementById("chat-box");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const userMsg = document.getElementById("msg").value;
+      chatBox.innerHTML += `<div class="user-msg"><strong>You:</strong> ${userMsg}</div>`;
+      document.getElementById("msg").value = "";
+      
+      const res = await fetch("/get", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `msg=${encodeURIComponent(userMsg)}`
+      });
+      const data = await res.json();
+      chatBox.innerHTML += `<div class="bot-msg"><strong>Bot:</strong> ${data.reply}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
+</body>
+</html>
