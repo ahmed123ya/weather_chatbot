@@ -3,6 +3,7 @@ import requests
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
@@ -37,6 +38,5 @@ def chat():
     return jsonify({"reply": reply})
 
 if __name__ == "__main__":
-    app.run(debug=True)
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
+    port = int(os.environ.get("PORT", 10000))  # Render sets PORT env var automatically
+    app.run(host="0.0.0.0", port=port)
