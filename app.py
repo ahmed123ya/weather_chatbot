@@ -1,9 +1,13 @@
 from flask import Flask, request, render_template, jsonify
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 
 app = Flask(__name__)
 
-API_KEY = "620fcbb0770d4c2cc412be3c845cb784"
 
 def get_weather(city):
     url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}&units=metric"
@@ -34,3 +38,5 @@ def chat():
 
 if __name__ == "__main__":
     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=10000)
